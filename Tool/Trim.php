@@ -392,8 +392,9 @@ class Tool_Trim
 //縦反転
 function flip_vertical(&$imgsrc){
     // PHP5.5以上であればimageflipがあるので使う
-    if( file_exists( 'imageflip' ) ) {
+    if( function_exists( 'imageflip' ) ) {
         imageflip( $imgsrc, IMG_FLIP_VERTICAL );
+        return;
     }
 
     $x=imagesx($imgsrc);
@@ -407,8 +408,9 @@ function flip_vertical(&$imgsrc){
 //横反転
 function flip_horizontal(&$imgsrc){
     // PHP5.5以上であればimageflipがあるので使う
-    if( file_exists( 'imageflip' ) ) {
+    if( function_exists( 'imageflip' ) ) {
         imageflip( $imgsrc, IMG_FLIP_HORIZONTAL );
+        return;
     }
 
     $x=imagesx($imgsrc);
