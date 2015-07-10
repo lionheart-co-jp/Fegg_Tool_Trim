@@ -298,21 +298,21 @@ class Tool_Trim
                         break;
                     case 5:
                         // 時計回りに90度回転して水平反転
-                        $this->cnv_image = imagerotate( $this->cnv_image, 90, 0 );
+                        $this->cnv_image = imagerotate( $this->cnv_image, 270, 0 );
                         flip_horizontal( $this->cnv_image );
                         break;
                     case 6:
                         // 時計回りに90度回転
-                        $this->cnv_image = imagerotate( $this->cnv_image, 90, 0 );
+                        $this->cnv_image = imagerotate( $this->cnv_image, 270, 0 );
                         break;
                     case 7:
                         // 時計回りに270度回転して水平反転
-                        $this->cnv_image = imagerotate( $this->cnv_image, 270, 0 );
+                        $this->cnv_image = imagerotate( $this->cnv_image, 90, 0 );
                         flip_horizontal( $this->cnv_image );
                         break;
                     case 8:
                         // 時計回りに270度回転
-                        $this->cnv_image = imagerotate( $this->cnv_image, 270, 0 );
+                        $this->cnv_image = imagerotate( $this->cnv_image, 90, 0 );
                         break;
                     case 1:
                     default:
