@@ -18,7 +18,7 @@ class Tool_Trim
             $cnv_mode  = NULL,
             $org_path  = NULL,
             $cnv_path  = NULL,
-            $exif      = NULL,
+            $exif      = array(),
             $jpeg_quality = 90;
 
     /**
@@ -39,9 +39,6 @@ class Tool_Trim
         if(! file_exists( $org_path ) ) {
             exit( 'Not File' );
         }
-
-        // Exif情報を取得しておく
-        $this->exif = exif_read_data( $file_path );
 
         // ファイルパスを変数に格納
         $this->cnv_path = $cnv_path;
@@ -68,6 +65,9 @@ class Tool_Trim
             case "image/pjpeg":
                 $this->org_image = imagecreatefromjpeg( $this->org_path );
                 $this->org_mode  = 'jpg';
+
+                // Exif情報を取得しておく
+                $this->exif = exif_read_data( $this->org_path );
             break;
             case "image/gif":
                 $this->org_image = imagecreatefromgif( $this->org_path );
