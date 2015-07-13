@@ -54,7 +54,7 @@ class Tool_Trim
 
         // 画像サイズを取得
         $this->org_data = array();
-        $info = getimagesize( $this->org_path, $info );
+        $info = getimagesize( $this->org_path, $finfo );
         list( $this->org_data['width'], $this->org_data['height'] ) = $info;
         $this->org_data['type'] = $info['mime'];
 
@@ -67,7 +67,7 @@ class Tool_Trim
                 $this->org_mode  = 'jpg';
 
                 // Exif情報を取得しておく
-                if ( function_exists( 'exif_read_data' ) && isset( $info["APP13"] ) ) {
+                if ( function_exists( 'exif_read_data' ) && isset( $finfo["APP13"] ) ) {
                     $this->exif = exif_read_data( $this->org_path );
                 }
             break;
