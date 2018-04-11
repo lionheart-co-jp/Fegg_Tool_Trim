@@ -6,12 +6,11 @@
  *
  * @access public
  * @author Lionheart Co., Ltd.
- * @version 1.0.1
+ * @version 1.0.2
  */
 class Tool_Trim
 {
-    private $_common   = array(),
-            $org_data  = NULL,
+    private $org_data  = NULL,
             $org_image = NULL,
             $org_mode  = NULL,
             $cnv_image = NULL,
@@ -20,13 +19,6 @@ class Tool_Trim
             $cnv_path  = NULL,
             $exif      = array(),
             $jpeg_quality = 90;
-
-    /**
-     * コンストラクタ
-     */
-    function __construct()
-    {
-    }
 
     /**
      * 画像情報取得
