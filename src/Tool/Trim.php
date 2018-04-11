@@ -67,8 +67,8 @@ class Tool_Trim
                 $this->org_mode  = 'jpg';
 
                 // Exif情報を取得しておく
-                if ( function_exists( 'exif_read_data' ) && isset( $finfo["APP13"] ) ) {
-                    $this->exif = exif_read_data( $this->org_path );
+                if ( function_exists( 'exif_read_data' ) ) {
+                    $this->exif = @exif_read_data( $this->org_path );
                 }
             break;
             case "image/gif":
@@ -82,6 +82,59 @@ class Tool_Trim
             default:
                 die( "NotImage" );
             break;
+        }
+
+        // Exif情報に回転情報が入っている場合は回転する
+        if( isset( $this->exif['Orientation'] ) ) {
+            switch( $this->exif['Orientation'] ) {
+                case 2:
+                    // 水平反転
+                    flip_horizontal( $this->org_image );
+                    break;
+                case 3:
+                    // 180度回転
+                    $this->org_image = imagerotate( $this->org_image, 180, 0 );
+                    break;
+                case 4:
+                    // 180度回転して水平反転
+                    $this->org_image = imagerotate( $this->org_image, 180, 0 );
+                    flip_horizontal( $this->org_image );
+                    break;
+                case 5:
+                    // 時計回りに90度回転して水平反転
+                    $this->org_image = imagerotate( $this->org_image, 270, 0 );
+                    flip_horizontal( $this->org_image );
+                    $tmpWidth = $this->org_data['width'];
+                    $this->org_data['width']  = $this->org_data['height'];
+                    $this->org_data['height'] = $tmpWidth;
+                    break;
+                case 6:
+                    // 時計回りに90度回転
+                    $this->org_image = imagerotate( $this->org_image, 270, 0 );
+                    $tmpWidth = $this->org_data['width'];
+                    $this->org_data['width']  = $this->org_data['height'];
+                    $this->org_data['height'] = $tmpWidth;
+                    break;
+                case 7:
+                    // 時計回りに270度回転して水平反転
+                    $this->org_image = imagerotate( $this->org_image, 90, 0 );
+                    flip_horizontal( $this->org_image );
+                    $tmpWidth = $this->org_data['width'];
+                    $this->org_data['width']  = $this->org_data['height'];
+                    $this->org_data['height'] = $tmpWidth;
+                    break;
+                case 8:
+                    // 時計回りに270度回転
+                    $this->org_image = imagerotate( $this->org_image, 90, 0 );
+                    $tmpWidth = $this->org_data['width'];
+                    $this->org_data['width']  = $this->org_data['height'];
+                    $this->org_data['height'] = $tmpWidth;
+                    break;
+                case 1:
+                default:
+                    // そのまま
+                    break;
+            }
         }
     }
 
@@ -280,48 +333,6 @@ class Tool_Trim
                 $fw,              //int srcW (コピーする幅)
                 $fh               //int srcH (コピーする高さ)
             );
-
-            // Exif情報に回転情報が入っている場合は回転する
-            // なるべく処理を軽くするためにリサイズ後に行う
-            if( isset( $this->exif['Orientation'] ) ) {
-                switch( $this->exif['Orientation'] ) {
-                    case 2:
-                        // 水平反転
-                        flip_horizontal( $this->cnv_image );
-                        break;
-                    case 3:
-                        // 180度回転
-                        $this->cnv_image = imagerotate( $this->cnv_image, 180, 0 );
-                        break;
-                    case 4:
-                        // 180度回転して水平反転
-                        $this->cnv_image = imagerotate( $this->cnv_image, 180, 0 );
-                        flip_horizontal( $this->cnv_image );
-                        break;
-                    case 5:
-                        // 時計回りに90度回転して水平反転
-                        $this->cnv_image = imagerotate( $this->cnv_image, 270, 0 );
-                        flip_horizontal( $this->cnv_image );
-                        break;
-                    case 6:
-                        // 時計回りに90度回転
-                        $this->cnv_image = imagerotate( $this->cnv_image, 270, 0 );
-                        break;
-                    case 7:
-                        // 時計回りに270度回転して水平反転
-                        $this->cnv_image = imagerotate( $this->cnv_image, 90, 0 );
-                        flip_horizontal( $this->cnv_image );
-                        break;
-                    case 8:
-                        // 時計回りに270度回転
-                        $this->cnv_image = imagerotate( $this->cnv_image, 90, 0 );
-                        break;
-                    case 1:
-                    default:
-                        // そのまま
-                        break;
-                }
-            }
         }
 
     /**
